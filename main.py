@@ -1,6 +1,7 @@
 from game import *
 from player import Player
 from enemy import Enemy
+import time
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 game = Game(pause=True, screen_display=screen)
