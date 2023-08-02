@@ -25,7 +25,7 @@ while game.running:
             game = Game(pause=False, screen_display=screen, sound=game.sound)
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             game.running = False
         if event.type == pygame.KEYUP and event.key == pygame.K_s:
             game.toggle_sound()
@@ -39,10 +39,10 @@ while game.running:
 
     # Generate enemies
     if len(game.enemy_list) < game.enemy_count:
-        enemy = Enemy(speed=3)
+        enemy = Enemy(speed=5, size=game.enemy_size)
         game.enemy_list.append(enemy.generate_enemy())
         game.points += 1
-        game.enemy_size = max(game.points // 5, 3)
+        game.enemy_size = max(game.points // 2, 3)
     game.move_enemies()
     enemy_hitboxes = game.draw_enemies(screen)
 

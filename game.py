@@ -4,8 +4,8 @@ pygame.init()
 pygame.display.set_caption('Blocks')
 
 # Constants
-SCREEN_WIDTH = 500
-SCREEN_HEIGHT = 500
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 800
 FPS = 60
 
 
@@ -49,7 +49,7 @@ class Game:
                               color='white', display_font=self.score_font)
             pygame.display.update()
         else:
-            self.display_text_center(f"Points: {self.points}", 0, 10, display_font=self.score_font)
+            self.display_text_center(f"Points: {self.points}", 10, 15, display_font=self.score_font)
             self.display_text_center(f"High Score: {self.high_score}", 0, SCREEN_HEIGHT - 20,
                                      display_font=self.score_font)
 
@@ -66,7 +66,7 @@ class Game:
         new_enemies = []
         for enemy in self.enemy_list:
             new_enemy = (enemy[0] + enemy[2], enemy[1] + enemy[3], enemy[2], enemy[3])
-            if 0 < new_enemy[0] < SCREEN_WIDTH and 0 < new_enemy[1] < SCREEN_HEIGHT:
+            if -self.enemy_size < new_enemy[0] < SCREEN_WIDTH and -self.enemy_size < new_enemy[1] < SCREEN_HEIGHT:
                 new_enemies.append(new_enemy)
         self.enemy_list = new_enemies
 

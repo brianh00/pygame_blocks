@@ -4,10 +4,10 @@ from game import *
 class Player:
 
     def __init__(self, screen):
-        self.player_x = 200
-        self.player_y = 200
+        self.player_x = SCREEN_WIDTH / 2
+        self.player_y = SCREEN_HEIGHT / 2
         self.player_size = 20
-        self.movement_speed = 3
+        self.movement_speed = 5
         self.movement_x = 0
         self.movement_y = 0
         self.player_box = None
@@ -24,9 +24,6 @@ class Player:
                                            [self.player_x, self.player_y, self.player_size, self.player_size])
 
     def check_pressed(self, pressed):
-        if pressed[pygame.K_SPACE]:
-            self.movement_x = 0
-            self.movement_y = 0
         if pressed[pygame.K_LEFT]:
             self.movement_x = -self.movement_speed
         if pressed[pygame.K_RIGHT]:
