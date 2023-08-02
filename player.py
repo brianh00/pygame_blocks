@@ -23,18 +23,24 @@ class Player:
         self.player_box = pygame.draw.rect(screen, 'blue',
                                            [self.player_x, self.player_y, self.player_size, self.player_size])
 
-    def check_keydown(self, event_key):
-        if event_key == pygame.K_SPACE:
+    def check_pressed(self, pressed):
+        if pressed[pygame.K_SPACE]:
             self.movement_x = 0
             self.movement_y = 0
-        if event_key == pygame.K_LEFT:
+        if pressed[pygame.K_LEFT]:
             self.movement_x = -self.movement_speed
-        if event_key == pygame.K_RIGHT:
+        if pressed[pygame.K_RIGHT]:
             self.movement_x = self.movement_speed
-        if event_key == pygame.K_UP:
+        if pressed[pygame.K_UP]:
             self.movement_y = -self.movement_speed
-        if event_key == pygame.K_DOWN:
+        if pressed[pygame.K_DOWN]:
             self.movement_y = self.movement_speed
+
+    def check_keyup(self, event_key):
+        if event_key in [pygame.K_LEFT, pygame.K_RIGHT]:
+            self.movement_x = 0
+        if event_key in [pygame.K_UP, pygame.K_DOWN]:
+            self.movement_y = 0
 
     def move_player(self):
         self.player_x += self.movement_x

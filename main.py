@@ -2,26 +2,34 @@ from game import *
 from player import Player
 from enemy import Enemy
 import time
+import os
 
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 game = Game(pause=True, screen_display=screen)
 playerObj = Player(screen)
 timer = pygame.time.Clock()
 
+
 while game.running:
     timer.tick(FPS)
     screen.fill('black')
 
+    # Event Handling
+    pressed = pygame.key.get_pressed()
+    if not game.pause:
+        playerObj.check_pressed(pressed)
+    else:
+        if pressed[pygame.K_SPACE]:
+            # Restart game
+            playerObj = Player(screen)
+            game = Game(pause=False, screen_display=screen)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game.running = False
-        if event.type == pygame.KEYDOWN and game.pause is False:
-            playerObj.check_keydown(event.key)
-        if event.type == pygame.KEYDOWN and game.pause is True:
-            # Restart game
-            if event.key == pygame.K_SPACE:
-                playerObj = Player(screen)
-                game = Game(pause=False, screen_display=screen)
+        if event.type == pygame.KEYUP and game.pause is False:
+            playerObj.check_keyup(event.key)
 
     game.display_score()
 
@@ -41,6 +49,8 @@ while game.running:
     playerObj.move_player()
     playerObj.draw_player(screen)
 
+    pygame.display.flip()
+
     # Check for collusions
     if playerObj.collide_enemies(enemy_hitboxes):
         pygame.mixer.Sound.play(game.crash_sound)
@@ -48,8 +58,6 @@ while game.running:
         game.check_highscore()
         time.sleep(1)
         game.pause = True
-
-    pygame.display.update()
 
 
 pygame.quit()
