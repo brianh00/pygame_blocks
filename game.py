@@ -27,13 +27,13 @@ class Game:
 
     def stop_screen(self, display_text, text_x, text_y):
         self.screen.blit(self.font.render(display_text, True, 'red'), (text_x, text_y))
-        pygame.display.update()
 
     def display_score(self):
         if self.pause:
             self.stop_screen("Dodge the Blocks", 100, 160)
             self.stop_screen(f"Points: {self.points}", 100, 200)
             self.stop_screen(f"High Score: {self.high_score}", 100, 240)
+            pygame.display.update()
         else:
             text = self.score_font.render(f"Points: {self.points}", True, 'green')
             text_rect = text.get_rect(center=(SCREEN_WIDTH / 2, 10))
