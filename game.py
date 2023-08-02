@@ -13,6 +13,7 @@ class Game:
     score_font = pygame.font.Font('freesansbold.ttf', 15)
     font = pygame.font.Font('freesansbold.ttf', 20)
     crash_sound = pygame.mixer.Sound("crash.wav")
+    high_score_file = 'high_score.txt'
 
     def __init__(self, pause=False, screen_display=None):
         self.running = True
@@ -41,10 +42,14 @@ class Game:
             text_rect = text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 20))
             self.screen.blit(text, text_rect)
 
-    @staticmethod
-    def get_high_score():
-        with open('high_score.txt', 'r') as f:
-            return f.readlines()[0]
+    def get_high_score(self):
+        try:
+            with open(self.high_score_file, 'r') as f:
+                return f.readlines()[0]
+        except FileNotFoundError:
+            with open(self.high_score_file, 'w') as f:
+                f.write('0')
+                return 0
 
     def move_enemies(self):
         new_enemies = []
@@ -64,5 +69,5 @@ class Game:
     def check_highscore(self):
         if self.points > int(self.high_score):
             self.high_score = self.points
-            with open('high_score.txt', 'w') as f:
+            with open(self.high_score_file, 'w') as f:
                 f.write(str(self.high_score))
